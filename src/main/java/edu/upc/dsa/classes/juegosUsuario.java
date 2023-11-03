@@ -5,6 +5,7 @@ public class juegosUsuario {
     int punt;
     String fecha;
 
+    public juegosUsuario(){}
     public juegosUsuario(String usuario, int punt, String fecha) {
         this.setUsuario(usuario);
         this.setPunt(punt);
