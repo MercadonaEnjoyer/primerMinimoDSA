@@ -70,7 +70,7 @@ public class JuegoManagerImpl implements JuegoManager{
     public List<juegosUsuario> sortList(String jId) throws juegoNoExisteException {
         try {
             List<juegosUsuario> lJu = getJuego(jId).getlUsuarios();
-            lJu.sort((juegosUsuario o1, juegosUsuario o2) -> Integer.compare(o1.getPunt(),(o2.getPunt())));
+            lJu.sort((juegosUsuario o1, juegosUsuario o2) -> Integer.compare(o2.getPunt(),(o1.getPunt())));
             for(juegosUsuario ju : lJu){
                 logger.info("Jugador: " + ju.getUsuario() + " - Puntuacion: " + ju.getPunt());
             }
@@ -117,6 +117,7 @@ public class JuegoManagerImpl implements JuegoManager{
     public int puntuacionUsuario(String uId) throws usuarioNoExisteException {
         try{
             Usuario u = getUser(uId);
+            logger.info("Puntuacion usuario: " + u.getPuntos());
             return u.getPuntos();
         }catch (usuarioNoExisteException e){
             logger.info("Usuario no existe");
@@ -133,6 +134,7 @@ public class JuegoManagerImpl implements JuegoManager{
             }
             u.setNiv(u.getNiv() + 1);
             u.setPuntos(u.getPuntos() + punt);
+            logger.info("Accediendo al siguiente nivel...");
         }catch (usuarioNoExisteException e){
             logger.info("Usuario no existe");
         }
@@ -143,9 +145,9 @@ public class JuegoManagerImpl implements JuegoManager{
         try{
             Usuario u = getUser(uId);
             if(u.getJuego() != null){
-                u.addJParticipados(u.getJuego());
-                juegosUsuario ju = new juegosUsuario(uId, u.getPuntos(), fecha);
+                juegosUsuario ju = new juegosUsuario(uId, u.getJuego().getId(), u.getPuntos(), fecha);
                 u.getJuego().addUsuario(ju);
+                u.addJParticipados(ju);
                 u.setJuego(null);
                 logger.info("Fin del juego");
                 return 0;
@@ -156,6 +158,15 @@ public class JuegoManagerImpl implements JuegoManager{
             logger.info("Usuario no existe");
         }
         return -1;
+    }
+
+    public List<juegosUsuario> juegosParticipados(String uId) throws usuarioNoExisteException {
+        Usuario u = getUser(uId);
+        logger.info("Generndo lista de juegos participados");
+        if (u != null){
+            return u.getjParticipados();
+        }
+        return null;
     }
 
     public int sizeUsers(){

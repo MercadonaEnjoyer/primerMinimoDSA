@@ -17,5 +17,6 @@ public interface JuegoManager {
     public int puntuacionUsuario(String uId) throws usuarioNoExisteException;
     public int pasarNivel(String uId, int punt, String fecha) throws usuarioNoExisteException;
     public int finPartida(String uId, String fecha);
+    public List<juegosUsuario> juegosParticipados(String uId) throws usuarioNoExisteException;
     public int sizeUsers();
 }

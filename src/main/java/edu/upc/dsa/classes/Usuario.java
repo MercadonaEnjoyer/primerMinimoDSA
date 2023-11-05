@@ -12,7 +12,7 @@ public class Usuario {
     int niv;
     int puntos;
     Juego juego;
-    LinkedList<Juego> jParticipados;
+    LinkedList<juegosUsuario> jParticipados;
 
     public Usuario(){}
     public Usuario(String nombre, String contra) {
@@ -61,15 +61,15 @@ public class Usuario {
         this.juego = juego;
     }
 
-    public List<Juego> getjParticipados() {
+    public List<juegosUsuario> getjParticipados() {
         return jParticipados;
     }
 
     public void setjParticipados() {
-        this.jParticipados = new LinkedList<Juego>();
+        this.jParticipados = new LinkedList<juegosUsuario>();
     }
 
-    public void addJParticipados(Juego j){
+    public void addJParticipados(juegosUsuario j){
         this.jParticipados.add(j);
     }
 }
